@@ -2,7 +2,7 @@
 
 shell_plus does not have a built-in toggle to print SQL only on demand.
 
-This utility monkey-patches Django's `QuerySet` to add a `pretty_sql()` method that prints the underlying SQL query in a formatted, readable way using [sqlparse](https://github.com/andialbrecht/sqlparse).
+If you don't want to flood the shel with formatted SQL output with every query, this utility monkey-patches Django's `QuerySet` to add a `pretty_sql()` method that prints the underlying SQL query in a formatted, readable way using [sqlparse](https://github.com/andialbrecht/sqlparse).
 
 ## Features
 
