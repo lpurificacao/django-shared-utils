@@ -7,8 +7,6 @@ def patch_queryset_pretty_sql():
      in every script, run the patch during app startup, such as in an app’s AppConfig.ready() method.
     Then in INSTALLED_APPS, use that app config so the patch is applied automatically when Django starts.
 
-
-    
     # myapp/apps.py
     from django.apps import AppConfig
 
