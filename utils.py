@@ -3,26 +3,27 @@ from django.db.models.query import QuerySet
 
 
 def patch_queryset_pretty_sql():
-    '''If you want this available across your Django project without remembering to call it
-     in every script, run the patch during app startup, such as in an app’s AppConfig.ready() method.
-    Then in INSTALLED_APPS, use that app config so the patch is applied automatically when Django starts.
+    """
+    Monkey patches Django QuerySet.__init__ to add a pretty_sql() method.
 
-    # myapp/apps.py
-    from django.apps import AppConfig
+    After calling this, any QuerySet created will have a .pretty_sql() method
+    that formats and syntax-highlights the SQL query using sqlparse and Rich.
 
-       class MyAppConfig(AppConfig):
-        name = "myapp"
+    Usage:
+        patch_queryset_pretty_sql()
+        qs = Book.objects.filter(title__startswith='A')
+        qs.pretty_sql()  # Prints formatted, colored SQL
 
-           def ready(self):
-            from .queryset_patch import patch_queryset_pretty_sql
-            patch_queryset_pretty_sql()
-    
-    # myproject/settings.py
-    INSTALLED_APPS = [
-    ...
-        # local
-    "myapp.apps.BlogConfig",
-    '''
+    To use project-wide, add to AppConfig.ready():
+        from django.apps import AppConfig
+
+        class MyAppConfig(AppConfig):
+            name = "myapp"
+
+            def ready(self):
+                from shared_utils.utils import patch_queryset_pretty_sql
+                patch_queryset_pretty_sql()
+    """
     
     original_init = QuerySet.__init__
 
